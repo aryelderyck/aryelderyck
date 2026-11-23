@@ -10,7 +10,7 @@ Me chamo Aryel Deryck, tenho 20 anos. Sou formado em Análise e Desenvolvimento 
  
 #
 
-<img align="right" alt="" height="190px" src="./src/edgerunners.gif">
+<img align="right" alt="" height="190px" src="src/edgerunners.gif">
 
 <h3 align="left">Connect with me!</h3>
 
