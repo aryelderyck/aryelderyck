@@ -1,1 +1,44 @@
+nome: gerar animação
 
+sobre:
+  # Execute automaticamente a cada 24 horas
+  Cronograma:
+    - cron: "0 */24 * * *" 
+  
+  # permite executar o trabalho manualmente a qualquer momento
+  workflow_dispatch:
+  
+  # Corra a cada empurrão do ramo mestre
+  Empurrão:
+    Ramos:
+    - mestre
+    
+  
+
+Empregos:
+  Gerar:
+    Permissões: 
+      Sumário: Escrever
+    Executa-on: Ubuntu-mais recente
+    Minutos-timeout: 5
+    
+    Passos:
+      # gera um jogo de cobra a partir de um grafo de contribuições de usuário do GitHub (<github_user_name>), gera uma animação SVG em <svg_out_path>
+      - nome: gerar github-contribution-grid-snake.svg
+        usos: Platane/snk/svg-only@v3
+        com:
+          github_user_name: ${{ github.repository_owner }}
+          Saídas: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+          
+          
+      # Empurrar o conteúdo de <build_dir> para um galho
+      # O conteúdo estará disponível em https://raw.githubusercontent.com/<github_user>/<repositório>/<target_branch>/<arquivo> , ou como página no github
+      - nome: enviar github-contribution-grid-snake.svg para o ramo de saída
+        Usos: crazy-max/ghaction-github-pages@v3.1.0
+        com:
+          target_branch: saída
+          build_dir: dist
+        Envi:
+          GITHUB_TOKEN: ${{ segredos. GITHUB_TOKEN }}
